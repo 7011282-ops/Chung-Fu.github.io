@@ -28,7 +28,7 @@ function drawAlien(){
   fill('black')
   circle(x - (x/20), y - (y/100), headSize / 10);
   circle(x + (x/20), y - (y/100), headSize / 10);
-  rect(x+x/2), y + (y/100), 100, 20);
+  rect((x+x/2), y + (y/100), 100, 20);
   //Draw Face
-  circle(x,y,)
+  circle(x,y, 50)
 }
