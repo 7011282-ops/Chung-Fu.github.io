@@ -39,16 +39,16 @@ function drawbackground(){
 
   //lab 1
   if(currentBack === 0){
-    fill(25,35,50);
+    fill(25, 35, 50);
   }
   else if(currentBack === 1){ //lab 2
     fill(80, 20, 25);
   }
   else if(currentBack === 2){ //lab 3
-    fill(45,20,70);
+    fill(45, 20, 70);
   }
   else if(currentBack === 3){ //lab 4
-    fill(5,8,12);
+    fill(5, 8, 12);
   }
 
   rect(0, 0, width, height);
@@ -77,14 +77,14 @@ function drawLab(){
 
   // left machine
   fill(60);
-  rect(80,180,180,300,15);
-  fill(20,180,220); //blue area
-  rect(100,210,140,160,10);
+  rect(80, 180, 180, 300, 15);
+  fill(20, 180, 220); //blue area
+  rect(100, 210, 140, 160, 10);
 
   // right machine
   fill(60);
   rect(width - 260, 180, 180, 300, 15);
-  fill(20,180,220); // blue area
+  fill(20, 180, 220); // blue area
   rect(width - 240, 210, 140, 160, 10);
 
   // warning
@@ -168,7 +168,7 @@ function moveCharacter(){
 }
 
 function mousePressed(){
-  if(mouseButton === CENTER){
+  if(mouseButton.left){
 
     currentBack += 1;
 
