@@ -6,9 +6,11 @@
 // - describe what you did to take this project "above and beyond"
 
 // global variables
+// currentBack use to change scene
 let currentBack = 0;
 let x = 600;
 let y = 700;
+
 async function setup() {
   createCanvas(windowWidth, windowHeight);
 }
@@ -20,8 +22,8 @@ function draw() {
   drawPortal();
   drawCheater();
   moveCharacter();
-  mousePressed();
-
+  
+  // the light can look through on sence 4
   if(currentBack === 3){
 
     fill(255,255,180,80);
@@ -166,7 +168,7 @@ function moveCharacter(){
     y += 5;
   }
 }
-
+// adding 1 in variable currentBack when mouseButton.left click 
 function mousePressed(){
   if(mouseButton.left){
 
