@@ -4,19 +4,32 @@
 
 
 //galbol variable
-let width_x = 10; // width of each terrain rectangle
 
-let startTime = 0; // starting position in the perlin noise sequence
+
+// width of each terrain rectangle
+let width_x = 10; 
+
+
+// control the speed and each value of noise change
+// inc more bigger the graph more rough
+let inc = 0.005;  
+
+
+// starting position in the perlin noise sequence
+let startTime = 0; 
+
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
   
 }
 
+
 function draw() {
   background(220);
   generateTerrain();
 }
+
 
 function generateTerrain(){
   // start at a slightly different noise position each frame
@@ -28,6 +41,7 @@ function generateTerrain(){
   // variables for calculating average height
   let totalHeight = 0;
   let count = 0;
+
 
   // Generate terrain from left to right
   for(let i = 0; i <= width; i += width_x){
@@ -45,13 +59,12 @@ function generateTerrain(){
 
     //drawFlag(i,y);
     rect(i, height, width_x, -y);
-    time += 0.01;
+    time += inc;
   }
 
 
   // the average of height
   let averageHeight = totalHeight / count;
-
 
 
 
@@ -87,8 +100,9 @@ function generateTerrain(){
 
   // startTime let noise(time) increasing every single time when the graph done
   // so looks like the mountain are moveing
-  startTime += 0.010;
+  startTime += inc;
 }
+
 
 function drawFlag(x,y){
 
@@ -102,8 +116,8 @@ function drawFlag(x,y){
   // flag
   fill('red');
   triangle(x, y -50,
-           x + 30, y - 40,
-           x, y - 30);
+          x + 30, y - 40,
+          x, y - 30);
 
 
   // restore setting
@@ -112,6 +126,8 @@ function drawFlag(x,y){
       
 }
 
+
+// control the graph more width or less width
 function keyPressed(){
   if(keyIsDown(RIGHT_ARROW)){
     width_x += 1;
