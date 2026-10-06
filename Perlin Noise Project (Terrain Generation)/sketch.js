@@ -4,56 +4,121 @@
 
 
 //galbol variable
-let width_x = 10;
-let height_y = 0;
-let height_x = 0;
+let width_x = 10; // width of each terrain rectangle
+
+let startTime = 0; // starting position in the perlin noise sequence
+
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  noLoop();
+  
 }
 
 function draw() {
   background(220);
   generateTerrain();
-  // drawFlag(i,y);
 }
 
 function generateTerrain(){
-  let time = 0;
+  // start at a slightly different noise position each frame
+  let time = startTime; // keep increasing
+  let height_y = 0;
+  let height_x = 0;
+
+
+  // variables for calculating average height
+  let totalHeight = 0;
+  let count = 0;
+
+  // Generate terrain from left to right
   for(let i = 0; i <= width; i += width_x){
+
+
+    // the Perlin Noise get a smooth terrain height
     let y = map(noise(time), 0, 1, 0, height);
-    let x = i;
-    drawFlag(x,y);
+    totalHeight += y;
+    count += 1;
+    if (height_y < y){
+      height_y = y;
+      height_x = i;
+    }
+
+
     //drawFlag(i,y);
     rect(i, height, width_x, -y);
     time += 0.01;
   }
+
+
+  // the average of height
+  let averageHeight = totalHeight / count;
+
+
+
+
+
+  // draw the average line
+  // strokeWeight(4);
+  // stroke('red');
+
+  // used height - averageHeight because (0,0) is on left top cornor
+  // and height make y go down
+  // so we need - averageHeight let y go up
+  // line(0, height - averageHeight, width, height - averageHeight);
+
+
+
+
+
+  // Draw average height band
+  noStroke();
+  fill(255, 0, 0, 100);
+  rect(0, height - averageHeight -5, width, 10);
+  stroke(0);
+
+
+  // restore setting
+  strokeWeight(1);
+  fill(255);
+
+
+  // draw the flag
+  drawFlag(height_x + width_x/2, height - height_y);
+
+
+  // startTime let noise(time) increasing every single time when the graph done
+  // so looks like the mountain are moveing
+  startTime += 0.010;
 }
 
 function drawFlag(x,y){
-  if (height_y < y){
-    height_y = y;
-    height_x = x;
-    if(x >= width){
-      rect(height_x, height, width_x, -height_y-100);
-      // triangle(height_x, -y -10, height_x + 5, -y -3, height_x, -y-6);
-    }
-  }
+
+
+  // flag pole
+  stroke(0);
+  strokeWeight(2);
+  line(x, y, x, y - 50);
+
+
+  // flag
+  fill('red');
+  triangle(x, y -50,
+           x + 30, y - 40,
+           x, y - 30);
+
+
+  // restore setting
+  strokeWeight(1);
+  fill(255); 
+      
 }
 
 function keyPressed(){
-  if(keyIsDown(LEFT_ARROW)){
+  if(keyIsDown(RIGHT_ARROW)){
     width_x += 1;
     redraw();
   }
-  if(keyIsDown(RIGHT_ARROW)){
-    if(width_x <= 1){
-      width_X = 1;
-    }
-    else{
-      width_x -= 1;
-    }
-    generateTerrain();
+  if(keyIsDown(LEFT_ARROW) && width_x > 1){
+    width_x -= 1;
     redraw();
   }
 }
