@@ -64,7 +64,7 @@ class Ship {
 
   display() {
     // show the ship
-    image(this.theImage, this.x,this.y);
+    image(this.theImage, this.x - 50,this.y);
   }
 
   handleKeyPress() {
@@ -93,9 +93,11 @@ class Bullet {
 
   update() {
     // what does the bullet need to do during each frame? how do we know if it is off screen?
-    if(mouseButton.left){
-      this.y -=10;
-    }
+    
+    this.y -= 5;
+    // if (this.y < 0){
+    //   remove(image(this.theImage, this.x, this.y));
+    // }
   }
 
   display() {
