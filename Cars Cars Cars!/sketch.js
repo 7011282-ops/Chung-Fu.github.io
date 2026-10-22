@@ -17,13 +17,17 @@ let way;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  eastbound.push(new Vehicle(50 + 30, height / 2));
+  eastbound.push(new Vehicle(50 + 30, height / 2,0));
+  westbound.push(new Vehicle(50 + 30, height / 3,1));
 }
 
 function draw() {
   background(220);
   drawRoad();
   for(let n of eastbound){
+    n.display();
+  }
+  for(let n of westbound){
     n.display();
   }
   // for(let n of Vehicle){
@@ -54,7 +58,7 @@ function drawRoad(){
 
 
 class Vehicle{
-  constructor(x,y){ 
+  constructor(x,y,toward){ 
     this.x = x; 
     this.y = y; 
     // this.VehicleType = random(0,1); 
@@ -65,15 +69,24 @@ class Vehicle{
     // this.derection = derection;
     // this.dx = 5;
     this.height = height*0.2;
+    this.toward = toward;
   }
 
   display(){
     // if(this.theImage === 0){
     //   if(direction === 1){
-    for(let i = 0; i < 10; i+= 5){
+    if (this.toward === 0){
+      for(let i = 0; i < 10; i+= 5){
       fill(this.c);
       rect(this.x,this.y,30,15);
       this.x += 0.1;
+    }
+    if(this.toward === 1){
+      for(let j = 0; j < 10; j+= 5){
+      fill(this.c);
+      rect(width * 0.8,this.y,30,15);
+      this.x += 0.1;
+    }
     }
     //   }
     // }
