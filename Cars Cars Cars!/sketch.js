@@ -10,40 +10,33 @@
 
 let eastbound = [];
 let westbound = [];
-let position;
-let VehicleType;
-let toward;
-let way;
+
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  eastbound.push(new Vehicle(50 + 30, height / 2,0));
-  westbound.push(new Vehicle(50 + 30, height / 3,1));
+  for(let i = 0; i < 40; i++){
+    let direction = floor(random(2));
+    let CarType = floor(random(2));
+    let XSpeed = random(6);
+    if(direction === 0){
+      let x = random(width);
+      let y = random(height*0.2,height*0.50);
+      eastbound.push(new Vehicle(x,y,CarType,XSpeed));
+    }
+    else{
+      let x = random(width);
+      let y = random(height*0.50,height*0.80);
+      westbound.push(new Vehicle(-x,y,CarType,XSpeed));
+    }
+  }
 }
 
 function draw() {
   background(220);
   drawRoad();
-  for(let n of eastbound){
+  for(let n of Vehicle){
     n.display();
   }
-  for(let n of westbound){
-    n.display();
-  }
-  // for(let n of Vehicle){
-  //   n.display();
-  // }
-  // toward = random(0,1);
-  // if(toward === 1){
-  //   position = random(0,100);
-  //   eastbound.push(new Vehicle(0,position));
-  //   for(let n of nodes){
-  //     n.display();
-  //   }
-  // }
-  // else{
-  //   westbound.push(new Vehicle(0,position));
-  // }
 }
 
 function drawRoad(){
@@ -58,43 +51,20 @@ function drawRoad(){
 
 
 class Vehicle{
-  constructor(x,y,toward){ 
+  constructor(x,y,CarType,XSpeed){ 
     this.x = x; 
     this.y = y; 
-    // this.VehicleType = random(0,1); 
-    // this.direction = random(0,1); 
-    // this.theImage = random(0,1);
+    this.XSpeed = XSpeed;
+    this.CarType = CarType;
     this.c = color(random(255),random(255),random(255));
-    // this.position = map(position, 0, 100, height*0.2, height*0.45);
-    // this.derection = derection;
-    // this.dx = 5;
-    this.height = height*0.2;
-    this.toward = toward;
   }
 
   display(){
-    // if(this.theImage === 0){
-    //   if(direction === 1){
-    if (this.toward === 0){
-      for(let i = 0; i < 10; i+= 5){
-      fill(this.c);
-      rect(this.x,this.y,30,15);
-      this.x += 0.1;
+    if(this.CarType === 0){
+      rect(this.x,this.y,10,5);
     }
-    if(this.toward === 1){
-      for(let j = 0; j < 10; j+= 5){
-      fill(this.c);
-      rect(width * 0.8,this.y,30,15);
-      this.x += 0.1;
+    else{
+      rect(this.x,this.y,15,6);
     }
-    }
-    //   }
-    // }
-    // else{
-
-    // }
   }
 }
-
-
-
