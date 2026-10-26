@@ -14,21 +14,19 @@ let westbound = [];
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
-  for(let i = 0; i < 40; i++){
-    let direction = floor(random(2));
+  for(let i = 0; i < 20; i++){
+    let x = random(width);
+    let y = random(height*0.2, height*0.5);
     let CarType = floor(random(2));
     let XSpeed = random(6);
-    if(direction === 0){
-      let x = random(width);
-      let y = random(height*0.2,height*0.50);
-      eastbound.push(new Vehicle(x,y,CarType,XSpeed));
-    }
-    else{
-      let x = random(width);
-      let y = random(height*0.50,height*0.80);
-      westbound.push(new Vehicle(-x,y,CarType,XSpeed));
-    }
+    eastbound.push(new Vehicle(x,y,CarType,XSpeed));
   }
+  for(let i = 0; i < 20; i++){
+    let x = random(width);
+    let y = random(height*0.5, height*0.8);
+    let CarType = floor(random(2));
+    let XSpeed = random(-6,0);
+    westbound.push(new Vehicle(x,y,CarType,XSpeed));
 }
 
 function draw() {
@@ -36,6 +34,7 @@ function draw() {
   drawRoad();
   for(let n of Vehicle){
     n.display();
+    n.action();
   }
 }
 
@@ -67,4 +66,24 @@ class Vehicle{
       rect(this.x,this.y,15,6);
     }
   }
+
+  action(){
+    if(this.XSpeed < 0){
+      if(this.XSpeed < -15){
+        this.XSpeed = min(this.XSpeed, -15);
+      }
+      else{
+        this.x += -0.01
+      }
+    }
+    else{
+      if(this.XSpeed > 15){
+        this.XSpeed = max(this.XSpeed, 15);
+      }
+      else{
+        this.x += 0.01
+      }
+    }
+  }
+  
 }
