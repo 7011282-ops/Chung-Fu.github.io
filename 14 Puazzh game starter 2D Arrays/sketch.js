@@ -56,10 +56,10 @@ function mousePressed(){
 
     //IF THEY EXIST:
     //flip the cardinal neighbours (NSEW)
-    if(x-1 >= 0){
-      filp(x- 1, y); // LEFT
+    if(x - 1 >= 0){
+      filp(x - 1, y); // LEFT
       if(y - 1 >= 0){
-        filp(x, y-1);// UP
+        filp(x, y - 1);// UP
       }
     }
   }
