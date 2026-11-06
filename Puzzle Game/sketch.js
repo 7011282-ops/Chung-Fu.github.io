@@ -10,6 +10,7 @@ let grid = [
 let rows = grid.length;
 let cols = grid[0].length;
 const tileSize = 60;
+const Sizeheight = 100;
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -29,6 +30,7 @@ async function setup() {
 function draw() {
   background(220);
   renderGrid();
+  checkgrid();
 }
 
 function getCurrentX(){
@@ -41,18 +43,27 @@ function getCurrentX(){
 function getCurrentY(){
   //determin current row pos of mouse
   let constrainedY = constrain(mouseY,0, height-1);
-  return int(constrainedY/tileSize);
+  return int(constrainedY/Sizeheight);
 }
 
 function filp(x,y){
   //flip the tile at position (x,y);
-  if(grid[y][x] === 255) grid[y][x] = 0;
-  else grid[y][x] = 255;
+  if(grid[y][x] === 255){
+    grid[y][x] = 0;
+  }
+  else {
+    grid[y][x] = 255;
+  }
 }
 
 function mousePressed(){
   //only do a flip if mouse is on the Canvas
-  if(mouseX < width && mouseY < height){
+  if(mouseIsPressed && keyIsDown(SHIFT)){
+    let x = getCurrentX();
+    let y = getCurrentY();
+    filp(x,y);
+  }
+  else if(mouseX < width && mouseY < height){
 
     let x = getCurrentX();
     let y = getCurrentY();
@@ -76,6 +87,23 @@ function mousePressed(){
   }
 }
 
+function checkgrid(){
+  let count = 0;
+  for(let y = 0; y < rows; y++){//y:01234
+    for(let x = 0; x < cols; x++){//x:012345
+      if(grid[y][x] === 0){
+        count += 1;
+      }
+      else{
+        count -= 1;
+      }
+    } 
+  }
+  if(count === 15 || count === -15){
+    print("You Win");
+  }
+}
+
 
 function renderGrid(){
   // interpret the data stored in 2D array
@@ -85,7 +113,7 @@ function renderGrid(){
     for(let x = 0; x < cols; x++){//x:012345
       let fillColor = grid[y][x];
       fill(fillColor);
-      square(x*tileSize, y*tileSize, tileSize);
+      rect(x*tileSize, y*Sizeheight, tileSize, Sizeheight);
     }
   } 
 }
