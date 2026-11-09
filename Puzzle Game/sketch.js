@@ -9,8 +9,13 @@ let grid = [
 ];
 let rows = grid.length;
 let cols = grid[0].length;
+let type = 0;
+let clickCount = 0;
+let startTime = 0;
+let gameStarted = false;
 const tileSize = 60;
 const Sizeheight = 100;
+
 
 async function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -57,32 +62,76 @@ function filp(x,y){
 }
 
 function mousePressed(){
-  //only do a flip if mouse is on the Canvas
-  if(mouseIsPressed && keyIsDown(SHIFT)){
-    let x = getCurrentX();
-    let y = getCurrentY();
-    filp(x,y);
+  if(!gameStarted){
+    startTime = millis();
+    gameStarted = true;
   }
-  else if(mouseX < width && mouseY < height){
 
+  clickCount++;
+
+  if(keyIsDown(SHIFT)){
     let x = getCurrentX();
     let y = getCurrentY();
-
     filp(x,y);
+    return;
+  }
 
-    //IF THEY EXIST:
-    //flip the cardinal neighbours (NSEW)
-    if(x - 1 >= 0){
-      filp(x - 1, y); // LEFT
+  if(type === 0){
+    //only do a flip if mouse is on the Canvas
+    if(mouseX < cols * tileSize && mouseY < rows * Sizeheight){
+
+      let x = getCurrentX();
+      let y = getCurrentY();
+
+      filp(x,y);
+
+      //IF THEY EXIST:
+      //flip the cardinal neighbours (NSEW)
+      if(x - 1 >= 0){
+        filp(x - 1, y); // LEFT
+      }
+      if(x + 1 < cols){
+        filp(x + 1, y); // RIGHT
+      }
+      if(y - 1 >= 0){
+        filp(x, y - 1);// UP
+      }
+      if(y + 1 < rows){
+        filp(x, y + 1);// DOWN
+      }
     }
-    if(x + 1 >= 0){
-      filp(x + 1, y); // RIGHT
+  }
+
+  else{
+    if(mouseX < cols * tileSize && mouseY < rows * Sizeheight){
+
+      let x = getCurrentX();
+      let y = getCurrentY();
+
+      filp(x,y);
+
+      //IF THEY EXIST:
+      //flip the cardinal neighbours (NSEW)
+      if(x + 1 < cols){
+        filp(x + 1, y); // RIGHT
+      }
+      if(y + 1 < rows){
+        filp(x, y + 1);// DOWN
+      }
+      if(x + 1 < cols && y + 1 < rows){
+        filp(x + 1, y + 1);// RIGHE && DOWN
+      }
     }
-    if(y - 1 >= 0){
-      filp(x, y - 1);// UP
+  }
+}
+
+function keyPressed(){
+  if(key === ' '){
+    if(type === 0){
+      type = 1;
     }
-    if(y + 1 >= 0){
-      filp(x, y + 1);// DOWN
+    else{
+      type = 0;
     }
   }
 }
@@ -99,11 +148,22 @@ function checkgrid(){
       }
     } 
   }
-  if(count === 15 || count === -15){
+  if(count === rows*cols || count === -rows*cols){
     print("You Win");
   }
 }
 
+
+function displayInfo(){
+  let elapsedTime = 0;
+
+  if(gameStarted){
+    elapsedTime = int((millis() - startTime) / 1000);
+  }
+
+  fill(0);
+
+}
 
 function renderGrid(){
   // interpret the data stored in 2D array
