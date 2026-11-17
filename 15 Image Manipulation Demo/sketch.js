@@ -57,7 +57,6 @@ function textEffect(){
       else if (avg > 50) text ("l", x, y);
     }
   }  
-
 }
 
 
@@ -78,13 +77,12 @@ function boost(){
   // brightening filter
   // "dumb" filter - same effect to each pixel
   // can use a single loop
-  let boostAmount = map(mouseX, 0, width, -50,50);
-  for(let i = 0; i < pixels.length; i+= 4){
+  let boostAmount = map(mouseX, 0, width, -50, 50);
+  for(let i = 0; i < pixels.length; i += 4){
     let r = pixels[i] + boostAmount;
     let g = pixels[i + 1] + boostAmount;
     let b = pixels[i + 2] + boostAmount;
     setPixelOneD(i,r,g,b);
-
   }
 }
 
@@ -111,7 +109,7 @@ function setPixel(x,y,r,g,b){
 function getAvg(x,y){ //using (x, y position)
   // return the average intensity of rgb
   // at (x,y);
-  let index = (y*width + x)*4;
+  let index = (y * width + x)*4;
   let r = pixels[index];
   let g = pixels[index+1];
   let b = pixels[index+2];
