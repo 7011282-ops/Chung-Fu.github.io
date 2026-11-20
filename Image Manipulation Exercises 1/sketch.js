@@ -5,7 +5,7 @@
 let chip;
 
 async function loadAssts(){
-  chip = await loadImage('/Image/chip.jpg');
+  chip = await loadImage('Image/chip.jpg');
 }
 
 
@@ -16,5 +16,7 @@ async function setup() {
 
 function draw() {
   background(220);
-  image(chip,0,0,200,200);
+  if(chip){
+    image(chip,0,0,200,200);
+  }
 }
